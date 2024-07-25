@@ -1,0 +1,14 @@
+#whatsapp.identifier:302797252927415
+#whatsapp.token:EAAQnB8HfvEcBOZCMBuZAZA50m1mULygNFmZB7DzamFSrK1yM3cySKyJegZCtpNaZC7DOn9PI7rMKPuoWODP4ZAOATmZA2ApCnZA44rxn2sVz1nyldjLS4PC9joh6SGKB6rgNzf7U7iZC2ZA1m9LFL546eZBt6rCAahkdTSEAm2OMGttwk9p4k56mjywaor4I4SxZCcV9PxBRo12g5PGAw25IiZAVtiWZA9ExiYhgIs8W4hmQ7L7llgZD
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ecommerce
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
