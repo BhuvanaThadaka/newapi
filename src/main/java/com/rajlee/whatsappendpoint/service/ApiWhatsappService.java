@@ -1,6 +1,5 @@
 package com.rajlee.whatsappendpoint.service;
 
-
 import com.rajlee.whatsappendpoint.dto.MessageBodyDTO;
 import com.rajlee.whatsappendpoint.model.RequestMessage;
 import com.rajlee.whatsappendpoint.model.RequestMessageText;
@@ -8,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestClientResponseException;
+import org.springframework.web.client.RestClientException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -26,7 +27,9 @@ public class ApiWhatsappService {
                 .build();
     }
 
-    public void sendMessage(MessageBodyDTO payload) {
+    public Map<String, Boolean> sendMessage(MessageBodyDTO payload) {
+        Map<String, Boolean> messageStatusMap = new HashMap<>();
+
         List<String> numbers = payload.numbers();
         numbers.forEach(number -> {
             RequestMessage request = new RequestMessage("whatsapp", number, new RequestMessageText(payload.message()));
@@ -36,11 +39,18 @@ public class ApiWhatsappService {
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(request)
                         .retrieve()
-                        .body(String.class);
+                        .body(String.class); // Blocking call to get the response
 
-            } catch (Exception ex) {
-                throw new RestClientResponseException("Error in sending message", 400, "Error in sending message", null, null, null);
+                // Assuming success based on response (you may need to adjust based on actual API response)
+                messageStatusMap.put(number, true); // Message sent successfully
+
+            } catch (RestClientException ex) {
+                // Log the error or handle it as needed
+                System.err.println("Error sending message to " + number + ": " + ex.getMessage());
+                messageStatusMap.put(number, false); // Message sending failed
             }
         });
+
+        return messageStatusMap;
     }
 }

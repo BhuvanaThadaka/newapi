@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class WhatsappendpointApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(WhatsappendpointApplication.class, args);
+
 	}
 
 }
