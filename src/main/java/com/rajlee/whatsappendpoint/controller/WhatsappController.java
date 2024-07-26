@@ -5,12 +5,14 @@ import com.rajlee.whatsappendpoint.dto.MessageBodyDTO;
 import com.rajlee.whatsappendpoint.service.ApiWhatsappService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/messages")
@@ -19,15 +21,24 @@ public class WhatsappController {
     @Autowired
     private ApiWhatsappService apiWhatsappService;
 
-
     @PostMapping("/send-message")
-    public void sendMessage(@RequestBody MessageBodyDTO payload) {
-        try{
-            apiWhatsappService.sendMessage(payload);
-        }catch (Exception ex){
-            ex.printStackTrace();;
-        }
+    public ResponseEntity<Map<String, Boolean>> sendMessage(@RequestBody MessageBodyDTO payload) {
+        Map<String, Boolean> response = apiWhatsappService.sendMessage(payload);
+        return ResponseEntity.ok(response); // Return status 200 with the map as the response body
     }
+
+
+
+//    @PostMapping("/send-message")
+//    public void sendMessage(@RequestBody MessageBodyDTO payload) {
+//        try{
+//            apiWhatsappService.sendMessage(payload);
+//        }catch (Exception ex){
+//            ex.printStackTrace();;
+//        }
+//    }
+
+
 
 
 
